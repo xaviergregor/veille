@@ -1,0 +1,19 @@
+{
+  "name": "veille",
+  "version": "1.5.0",
+  "description": "Veille technologique : agrégateur RSS/Atom multi-utilisateurs avec gestion des flux",
+  "private": true,
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "@zip.js/zip.js": "^2.24.0",
+    "fast-xml-parser": "^5.2.0",
+    "qrcode": "^1.5.4"
+  }
+}

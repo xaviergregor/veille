@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>Veille — flux techno</title>
+    <dateCreated>Thu, 15 Oct 2026 20:53:36 GMT</dateCreated>
+  </head>
+  <body>
+    <outline text="Actualité tech" title="Actualité tech">
+      <outline type="rss" text="01Net" title="01Net" xmlUrl="https://www.01net.com/actualites/rss/"/>
+      <outline type="rss" text="itConnect" title="itConnect" xmlUrl="https://www.it-connect.fr/feed/"/>
+      <outline type="rss" text="Le Monde - Pixels" title="Le Monde - Pixels" xmlUrl="https://www.lemonde.fr/pixels/rss_full.xml"/>
+      <outline type="rss" text="Korben" title="Korben" xmlUrl="https://korben.info/feed/"/>
+      <outline type="rss" text="LoKan.jp" title="LoKan.jp" xmlUrl="https://lokan.jp/feed/"/>
+      <outline type="rss" text="Next" title="Next" xmlUrl="https://www.nextinpact.com/rss"/>
+      <outline type="rss" text="Numerama" title="Numerama" xmlUrl="https://www.numerama.com/feed/"/>
+      <outline type="rss" text="QTG" title="QTG" xmlUrl="https://www.qtg.fr/feed"/>
+      <outline type="rss" text="Le Monde Informatique" title="Le Monde Informatique" xmlUrl="https://www.lemondeinformatique.fr/flux-rss/thematique/toutes-les-actualites/rss.xml"/>
+    </outline>
+    <outline text="Apple" title="Apple">
+      <outline type="rss" text="Apple NewsRoom" title="Apple NewsRoom" xmlUrl="https://www.apple.com/fr/newsroom/rss-feed.rss"/>
+      <outline type="rss" text="Basic Apple Guy" title="Basic Apple Guy" xmlUrl="https://basicappleguy.com/basicappleblog?format=rss"/>
+      <outline type="rss" text="Le journal du lapin" title="Le journal du lapin" xmlUrl="https://www.journaldulapin.com/feed/"/>
+      <outline type="rss" text="MacG" title="MacG" xmlUrl="https://cdn.mgig.fr/rss/light_rss_macg.xml"/>
+      <outline type="rss" text="OS X Daily" title="OS X Daily" xmlUrl="https://osxdaily.com/feed/"/>
+    </outline>
+    <outline text="Cybersécurité" title="Cybersécurité">
+      <outline type="rss" text="CERT" title="CERT" xmlUrl="https://cert.ssi.gouv.fr/feed/"/>
+      <outline type="rss" text="ANSSI" title="ANSSI" xmlUrl="https://cyber.gouv.fr/actualites/rss/"/>
+      <outline type="rss" text="Google Security" title="Google Security" xmlUrl="https://security.googleblog.com/feeds/posts/default"/>
+      <outline type="rss" text="Proton Privacy" title="Proton Privacy" xmlUrl="https://proton.me/blog/feed"/>
+      <outline type="rss" text="Reflets.info" title="Reflets.info" xmlUrl="https://reflets.info/feed/"/>
+      <outline type="rss" text="ZATAZ" title="ZATAZ" xmlUrl="https://www.zataz.com/feed/"/>
+    </outline>
+    <outline text="Linux &amp; Open Source" title="Linux &amp; Open Source">
+      <outline type="rss" text="AnotherHomePage" title="AnotherHomePage" xmlUrl="https://shaarli.anotherhomepage.org/feed/atom?"/>
+      <outline type="rss" text="April" title="April" xmlUrl="https://www.april.org/fr/rss.xml"/>
+      <outline type="rss" text="Ataxya" title="Ataxya" xmlUrl="https://blog.ataxya.net/rss/"/>
+      <outline type="rss" text="BlaBlaLinux" title="BlaBlaLinux" xmlUrl="https://blablalinux.be/feed/"/>
+      <outline type="rss" text="Bortzmeyer" title="Bortzmeyer" xmlUrl="https://www.bortzmeyer.org/feed-full.atom"/>
+      <outline type="rss" text="Blogmotion" title="Blogmotion" xmlUrl="https://blogmotion.fr/feed"/>
+      <outline type="rss" text="Cachem" title="Cachem" xmlUrl="https://www.cachem.fr/feed/"/>
+      <outline type="rss" text="Framablog" title="Framablog" xmlUrl="https://framablog.org/feed/"/>
+      <outline type="rss" text="Framasoft" title="Framasoft" xmlUrl="https://rss.framasoft.org/"/>
+      <outline type="rss" text="Goodtech" title="Goodtech" xmlUrl="https://goodtech.info/feed/"/>
+      <outline type="rss" text="Journal du Hacker" title="Journal du Hacker" xmlUrl="https://www.journalduhacker.net/rss"/>
+      <outline type="rss" text="La Quadrature du Net" title="La Quadrature du Net" xmlUrl="https://www.laquadrature.net/rss"/>
+      <outline type="rss" text="LinuxFR" title="LinuxFR" xmlUrl="https://linuxfr.org/news.atom"/>
+      <outline type="rss" text="LinuxFR Journaux" title="LinuxFR Journaux" xmlUrl="https://linuxfr.org/journaux.atom"/>
+      <outline type="rss" text="Microlinux" title="Microlinux" xmlUrl="https://www.microlinux.fr/feed_rss_created.xml"/>
+      <outline type="rss" text="Whiterabbit" title="Whiterabbit" xmlUrl="https://whiterabbit.sh/?feed=rss"/>
+    </outline>
+    <outline text="Surveillance" title="Surveillance">
+      <outline type="rss" text="Proton Status" title="Proton Status" xmlUrl="https://status.proton.me/history.rss"/>
+      <outline type="rss" text="SEWAN" title="SEWAN" xmlUrl="http://live.sewan.fr/rss"/>
+      <outline type="rss" text="Tailscale" title="Tailscale" xmlUrl="https://tailscale.com/blog/index.xml"/>
+      <outline type="rss" text="FuitesInfo" title="FuitesInfo" xmlUrl="https://fuitesinfos.fr/feed.xml"/>
+    </outline>
+  </body>
+</opml>

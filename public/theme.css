@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Thème « Calme »
+   Clair par défaut, sombre via [data-theme="dark"] ou préférence système.
+   ========================================================================== */
+
+:root {
+  --bg-primary: #f7f6f2;
+  --bg-secondary: #efede7;
+  --bg-card: #ffffff;
+  --border: #e4e1d8;
+  --border-strong: #d4d0c4;
+  --white: #3d4152;          /* texte courant */
+  --white-bright: #1d2133;   /* titres / texte fort */
+  --gray: #646a7c;
+  --gray-soft: #8d92a2;
+  --accent: #5a4bd1;
+  --accent-strong: #4a3cb8;
+  --accent-soft: #eeebfc;
+  --on-accent: #ffffff;
+  --focus-ring: rgba(90, 75, 209, .18);
+  --selection-bg: #ddd8fa;
+
+  --ok: #2e7d5b;      --ok-soft: #e3f3ea;
+  --warn: #9a5b12;    --warn-soft: #fbefd9;
+  --danger: #c0392b;  --danger-soft: #fbe9e6;
+  --info: #3a5bb8;    --info-soft: #e6ecfa;
+  --highlight: #fff1a8;
+
+  --shadow-sm: 0 1px 2px rgba(29, 33, 51, .05);
+  --shadow-md: 0 10px 30px -12px rgba(29, 33, 51, .18);
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --radius: 14px;
+  --radius-sm: 9px;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #14151d;
+  --bg-secondary: #191a24;
+  --bg-card: #1e202c;
+  --border: #2a2c3a;
+  --border-strong: #383b4d;
+  --white: #c5c8d4;
+  --white-bright: #eceef4;
+  --gray: #8e93a6;
+  --gray-soft: #6c7184;
+  --accent: #7669e0;
+  --accent-strong: #8b7fe8;
+  --accent-soft: rgba(118, 105, 224, .16);
+  --on-accent: #ffffff;
+  --focus-ring: rgba(118, 105, 224, .28);
+  --selection-bg: rgba(118, 105, 224, .38);
+
+  --ok: #5cc595;      --ok-soft: rgba(92, 197, 149, .13);
+  --warn: #e3a857;    --warn-soft: rgba(227, 168, 87, .13);
+  --danger: #ef7b6c;  --danger-soft: rgba(239, 123, 108, .13);
+  --info: #8aa6f0;    --info-soft: rgba(138, 166, 240, .13);
+  --highlight: rgba(250, 214, 80, .32);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3);
+  --shadow-md: 0 14px 34px -12px rgba(0, 0, 0, .6);
+
+  color-scheme: dark;
+}
+
+/* Préférence système si l'utilisateur n'a pas choisi */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: #14151d;
+    --bg-secondary: #191a24;
+    --bg-card: #1e202c;
+    --border: #2a2c3a;
+    --border-strong: #383b4d;
+    --white: #c5c8d4;
+    --white-bright: #eceef4;
+    --gray: #8e93a6;
+    --gray-soft: #6c7184;
+    --accent: #7669e0;
+    --accent-strong: #8b7fe8;
+    --accent-soft: rgba(118, 105, 224, .16);
+    --on-accent: #ffffff;
+    --focus-ring: rgba(118, 105, 224, .28);
+    --selection-bg: rgba(118, 105, 224, .38);
+    --ok: #5cc595;      --ok-soft: rgba(92, 197, 149, .13);
+    --warn: #e3a857;    --warn-soft: rgba(227, 168, 87, .13);
+    --danger: #ef7b6c;  --danger-soft: rgba(239, 123, 108, .13);
+    --info: #8aa6f0;    --info-soft: rgba(138, 166, 240, .13);
+    --highlight: rgba(250, 214, 80, .32);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3);
+    --shadow-md: 0 14px 34px -12px rgba(0, 0, 0, .6);
+    color-scheme: dark;
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* L'attribut hidden doit toujours l'emporter sur les display: grid / flex des composants */
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--white);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+
+::selection { background: var(--selection-bg); color: var(--white-bright); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; border: 2px solid var(--bg-primary); }
+
+a { color: var(--accent); }
+
+/* Transition douce uniquement pendant un changement de thème */
+.theme-anim, .theme-anim *, .theme-anim *::before, .theme-anim *::after {
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease, fill .3s ease !important;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  color: var(--white-bright);
+  padding: 8px 15px;
+  border-radius: 999px;
+  font: 500 13px/1.2 var(--font-sans);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background .15s, border-color .15s, color .15s, transform .15s, box-shadow .15s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--focus-ring); }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--on-accent); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--gray); }
+.btn-ghost:hover { background: var(--bg-secondary); border-color: transparent; color: var(--white-bright); }
+.btn-danger:hover { color: var(--danger); border-color: var(--danger); background: var(--danger-soft); }
+.btn-sm { padding: 6px 12px; font-size: 12.5px; }
+.btn-icon { padding: 0; width: 32px; height: 32px; }
+.btn-icon.btn-sm { width: 30px; height: 30px; }
+
+/* ---------- Toggle de thème (identique au site : rond 40px) ---------- */
+.theme-toggle {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  color: var(--white-bright);
+  cursor: pointer; flex-shrink: 0;
+  transition: border-color .15s, color .15s, transform .3s;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--focus-ring); }
+.theme-toggle svg { width: 17px; height: 17px; }
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* ---------- Formulaires ---------- */
+input, select, textarea {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  color: var(--white-bright);
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  font: 400 13.5px/1.4 var(--font-sans);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--focus-ring); }
+input::placeholder, textarea::placeholder { color: var(--gray-soft); }
+input.mono { font-family: var(--font-mono); font-size: 13px; text-transform: uppercase; letter-spacing: .3px; }
+
+/* ---------- Typo utilitaire ---------- */
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--accent);
+}
+.mono { font-family: var(--font-mono); }
+.muted { color: var(--gray); }

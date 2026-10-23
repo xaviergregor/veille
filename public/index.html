@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f7f6f2">
+<title>Veille technologique</title>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Veille">
+<script src="/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/theme.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#actus">
+      <span class="brand-mark" id="brandMark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></span>
+      <div>Veille<small>Technologique</small></div>
+    </a>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="recherche" placeholder="Rechercher un article, une source…" autocomplete="off" spellcheck="false">
+      <kbd>/</kbd>
+    </div>
+    <div class="topbar-actions">
+      <span class="sync" id="sync" data-state="idle" title="Synchronisation des articles lus"><span class="sync-dot"></span><span class="sync-label">Hors ligne</span></span>
+      <div class="umenu" id="umenu"></div>
+      <a class="btn btn-sm" href="/login.html" id="lienConnexion" hidden>Se connecter</a>
+      <button class="theme-toggle" type="button" id="btnTheme" aria-label="Changer de thème">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <button class="btn btn-icon btn-ghost btn-danger" type="button" id="btnDeconnexion" title="Déconnexion" aria-label="Déconnexion" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="page-head">
+    <div><span class="kicker" id="kicker">Veille technologique</span><h1 id="titrePage">Actualités</h1></div>
+    <nav class="tabs" id="tabs" aria-label="Sections">
+      <button class="tab active" type="button" data-vue="actus">Actualités<span class="count" id="countActus"></span></button>
+      <button class="tab" type="button" data-vue="flux">Mes flux<span class="count" id="countFlux"></span></button>
+      <button class="tab" type="button" data-vue="comptes" data-admin hidden>Comptes</button>
+    </nav>
+  </div>
+
+  <!-- ======== Actualités ======== -->
+  <section id="vue-actus" class="vue">
+    <div class="toolbar">
+      <div class="toolbar-label" id="etat"></div>
+      <div class="btn-group">
+        <select id="periode" class="select-sm" aria-label="Période">
+          <option value="2">Hier + aujourd'hui</option>
+          <option value="1">Aujourd'hui</option>
+          <option value="7">7 jours</option>
+          <option value="30">30 jours</option>
+        </select>
+        <select id="tri" class="select-sm" aria-label="Ordre">
+          <option value="asc">Anciens d'abord</option>
+          <option value="desc">Récents d'abord</option>
+        </select>
+        <button class="btn btn-sm has-label" type="button" id="btnActualiser" title="Collecter mes flux maintenant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><path d="M21 3v5h-5"/></svg><span class="label">Actualiser</span></button>
+        <button class="btn btn-sm btn-primary has-label" type="button" id="btnToutLu" title="Marquer comme lus les articles affichés"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span class="label">Tout marquer lu</span></button>
+      </div>
+    </div>
+    <div class="chips" id="categories" role="toolbar" aria-label="Catégories"></div>
+    <div class="chips chips-sub" id="sources" role="toolbar" aria-label="Sources" hidden></div>
+    <div id="liste"><div class="empty">Chargement des actualités…</div></div>
+  </section>
+
+  <!-- ======== Flux ======== -->
+  <section id="vue-flux" class="vue" hidden>
+    <div class="toolbar">
+      <div class="toolbar-label" id="etatFlux"></div>
+      <div class="btn-group">
+        <button class="btn btn-sm has-label" type="button" id="btnImport" title="Importer un fichier OPML (ou une sauvegarde .json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg><span class="label">Importer OPML</span></button>
+        <a class="btn btn-sm has-label" href="/api/feeds/export.opml" title="Exporter la liste en OPML"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="label">Exporter OPML</span></a>
+        <button class="btn btn-sm has-label" type="button" id="btnCollecte" title="Collecter mes flux maintenant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><path d="M21 3v5h-5"/></svg><span class="label">Collecter</span></button>
+        <button class="btn btn-sm btn-primary" type="button" id="btnAjoutFlux"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Ajouter un flux</button>
+        <input type="file" id="fichierOpml" accept=".opml,.xml,.json,text/xml,text/x-opml,application/json" hidden>
+      </div>
+    </div>
+    <div id="listeFlux"></div>
+  </section>
+
+  <!-- ======== Comptes ======== -->
+  <section id="vue-comptes" class="vue" hidden>
+    <div class="toolbar">
+      <div class="toolbar-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Qui peut se connecter. Chaque compte a ses propres flux et son historique de lecture.</span></div>
+      <div class="btn-group">
+      <button class="btn btn-sm has-label" type="button" id="btnSauvegardes" title="Copies quotidiennes et sauvegarde complète chiffrée"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="label">Sauvegardes</span></button>
+      <button class="btn btn-sm btn-primary" type="button" id="btnAjoutCompte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Nouveau compte</button>
+      </div>
+    </div>
+    <div id="listeComptes"></div>
+  </section>
+</main>
+
+<!-- Ajout / modification d'un flux -->
+<dialog id="dlgFlux" class="modal">
+  <form id="formFlux" class="modal-body">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg><span id="titreDlgFlux">Ajouter un flux</span></h2>
+    <div class="form-row">
+      <label class="form-label" for="fluxUrl">Adresse du flux ou du site</label>
+      <div class="input-row">
+        <input class="mono-input" id="fluxUrl" name="url" type="url" placeholder="https://exemple.fr/feed/" required>
+        <button class="btn" type="button" id="btnSonder">Vérifier</button>
+      </div>
+      <span class="form-hint" id="sonde"></span>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fluxNom">Nom affiché</label>
+      <input id="fluxNom" name="name" maxlength="80" required>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="fluxCat">Catégorie</label>
+      <input id="fluxCat" name="category" maxlength="60" list="listeCategories" placeholder="Ex. Cybersécurité">
+      <datalist id="listeCategories"></datalist>
+    </div>
+    <div class="acc-alert" id="errFlux" role="alert" hidden></div>
+    <div class="form-actions">
+      <button class="btn" type="button" data-fermer>Annuler</button>
+      <button class="btn btn-primary" type="submit" id="btnEnregFlux">Ajouter</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Mon compte : mot de passe + double authentification -->
+<dialog id="dlgMoi" class="modal">
+  <div class="modal-body">
+    <form id="formMoi" class="acc-stack">
+      <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg>Mon compte</h2>
+      <div class="acc-id"><span class="avatar" id="moiAvatar"></span><div><strong id="moiNom"></strong><small id="moiRole"></small></div></div>
+      <div class="acc-alert" id="errMoi" role="alert" hidden></div>
+      <input type="text" name="username" autocomplete="username" hidden readonly>
+      <div class="form-row"><label class="form-label" for="moiActuel">Mot de passe actuel</label><input type="password" id="moiActuel" name="current" autocomplete="current-password" required></div>
+      <div class="form-row"><label class="form-label" for="moiNouveau">Nouveau mot de passe</label><input type="password" id="moiNouveau" name="password" autocomplete="new-password" placeholder="8 caractères minimum" minlength="8" required></div>
+      <div class="form-row"><label class="form-label" for="moiConf">Confirmation</label><input type="password" id="moiConf" name="confirm" autocomplete="new-password" required></div>
+      <div class="form-actions"><button type="submit" class="btn btn-primary">Changer le mot de passe</button><button type="button" class="btn" data-fermer>Fermer</button></div>
+    </form>
+    <section class="twofa-sec" id="twofaSec"></section>
+  </div>
+</dialog>
+
+<!-- Compte d'accès (administrateurs) : création / modification -->
+<dialog id="dlgCompte" class="modal">
+  <form id="formCompte" class="modal-body">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="titreDlgCompte">Nouveau compte</span></h2>
+    <div class="form-row" id="rangIdentifiant">
+      <label class="form-label" for="cptNom">Identifiant</label>
+      <input id="cptNom" name="username" autocomplete="off" autocapitalize="none" spellcheck="false">
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="cptMdp" id="libMdp">Mot de passe</label>
+      <input id="cptMdp" name="password" type="password" autocomplete="new-password" minlength="8">
+      <span class="form-hint" id="aideMdp">8 caractères minimum.</span>
+    </div>
+    <div class="form-row" id="rangRole">
+      <span class="form-label">Rôle</span>
+      <div class="acc-radio" id="choixRole">
+        <button type="button" data-role="user" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Lecteur</button>
+        <button type="button" data-role="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Administrateur</button>
+      </div>
+      <span class="form-hint">Un administrateur gère aussi les flux et les comptes.</span>
+    </div>
+    <label class="acc-check"><input type="checkbox" id="cptRequire2fa"><span><strong>Imposer la double authentification</strong><span>Code à 6 chiffres d'une application d'authentification. Le QR code est présenté à la prochaine connexion.</span></span></label>
+    <label class="acc-check" id="rangReset2fa" hidden><input type="checkbox" id="cptReset2fa"><span><strong>Réinitialiser sa double authentification</strong><span>Téléphone perdu : la 2FA est supprimée et ses sessions sont fermées.</span></span></label>
+    <div class="acc-alert" id="errCompte" role="alert" hidden></div>
+    <div class="form-actions">
+      <button class="btn" type="button" data-fermer>Annuler</button>
+      <button class="btn btn-primary" type="submit" id="btnEnregCompte">Créer</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Sauvegarde / restauration d'un compte (le sien, ou n'importe lequel pour un admin) -->
+<dialog id="dlgCompteSauv" class="modal">
+  <div class="modal-body">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span id="titreCompteSauv">Sauvegarder / restaurer</span></h2>
+    <p class="twofa-intro" id="introCompteSauv"></p>
+    <div class="sauv-actions">
+      <a class="btn btn-primary" id="lienSauvJson" download>Télécharger la sauvegarde (.json)</a>
+      <a class="btn" id="lienSauvOpml" href="/api/feeds/export.opml" download>Exporter les flux (OPML)</a>
+    </div>
+    <form id="formRestaurer" class="acc-stack sauv-restaurer">
+      <h3>Restaurer une sauvegarde</h3>
+      <input type="file" id="fichierRestaurer" accept=".json,application/json" required>
+      <div class="acc-radio" id="modeRestaurer">
+        <button type="button" data-mode="ajouter" class="on">Ajouter</button>
+        <button type="button" data-mode="remplacer">Remplacer tout</button>
+      </div>
+      <span class="form-hint" id="aideModeRestaurer">Ajoute les flux absents et marque lus les articles lus dans la sauvegarde. Rien n'est supprimé.</span>
+      <div class="acc-alert" id="errRestaurer" role="alert" hidden></div>
+      <div class="form-actions"><button type="button" class="btn" data-fermer>Fermer</button><button type="submit" class="btn btn-primary" id="btnRestaurer">Restaurer</button></div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Sauvegardes de l'instance (administrateurs) -->
+<dialog id="dlgSauvegardes" class="modal modal-large">
+  <div class="modal-body">
+    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Sauvegardes</h2>
+    <section class="sauv-bloc">
+      <h3>Copie quotidienne automatique</h3>
+      <p class="twofa-intro" id="infoQuotidienne"></p>
+      <div id="listeQuotidiennes" class="sauv-liste"></div>
+      <div><button type="button" class="btn btn-sm" id="btnCopieMaintenant">Faire la copie du jour maintenant</button></div>
+    </section>
+    <form class="sauv-bloc acc-stack" id="formComplete">
+      <h3>Sauvegarde complète chiffrée</h3>
+      <p class="twofa-intro">Archive <strong>ZIP chiffrée AES-256</strong> : base, logo, <code>.env</code> (avec la SECRET_KEY) et <code>docker-compose.yml</code>. Elle suffit à tout reconstruire : c'est la phrase de passe qui la protège. Choisissez-la longue (12 caractères ou plus) et <strong>conservez-la à part</strong>. S'ouvre avec 7-Zip ou Keka.</p>
+      <div class="acc-alert acc-warn" id="avertConfig" hidden></div>
+      <input type="text" name="username" autocomplete="username" value="sauvegarde-veille" hidden readonly>
+      <div class="form-row"><label class="form-label" for="phrase1">Phrase de passe</label><input type="password" id="phrase1" autocomplete="new-password" minlength="10" required></div>
+      <div class="form-row"><label class="form-label" for="phrase2">Confirmation</label><input type="password" id="phrase2" autocomplete="new-password" required></div>
+      <div class="acc-alert" id="errComplete" role="alert" hidden></div>
+      <div class="form-actions"><button type="button" class="btn" data-fermer>Fermer</button><button type="submit" class="btn btn-primary" id="btnComplete">Télécharger l'archive chiffrée</button></div>
+    </form>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toastTexte"></span>
+  <button type="button" id="toastAnnuler" hidden>Annuler</button>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

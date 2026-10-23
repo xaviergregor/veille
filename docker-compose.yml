@@ -1,0 +1,18 @@
+services:
+  veille:
+    build: .
+    container_name: veille
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file: .env
+    environment:
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ./data:/app/data              # base SQLite (veille.db) et clé éventuelle (secret.key)
+      - ./branding:/app/branding:ro   # logo optionnel : logo.svg|png (+ logo-dark.* pour le thème sombre)
+      # Inclus dans la sauvegarde complète chiffrée (lecture seule). Le .env doit exister avant le premier « up »
+      - ./.env:/app/host/.env:ro
+      - ./docker-compose.yml:/app/host/docker-compose.yml:ro
+    security_opt:
+      - no-new-privileges:true
